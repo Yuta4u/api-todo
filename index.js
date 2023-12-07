@@ -37,7 +37,15 @@ app.get("/api/v1/todos", (req, res) => {
   })
 })
 
-const port = 3306 || 3001
+app.post("/v1/todos", (req, res) => {
+  const { title, deskripsi, date, check } = req.body
+  const sql = "insert into todos (title, deskripsi, date) VALUES (?, ?, ?)"
+  db.query(sql, [title, deskripsi, date, check], (err, result) => {
+    if (err) throw err
+    res.status(201).json({ msg: "Berhasil post todos" })
+  })
+})
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
