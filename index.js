@@ -46,6 +46,15 @@ app.post("/api/v1/todos", (req, res) => {
   })
 })
 
+app.delete("/api/v1/todos/:id", (req, res) => {
+  const todosId = req.params.id
+  const sql = `delete from todos where id=${todosId}`
+  db.query(sql, (err, result) => {
+    if (err) throw err
+    res.status(201).json({ msg: "Berhasil delete todos" })
+  })
+})
+
 const port = process.env.DB_PORT || 3001
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
