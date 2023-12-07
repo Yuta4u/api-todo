@@ -37,16 +37,16 @@ app.get("/api/v1/todos", (req, res) => {
   })
 })
 
-app.post("/api/v1/todos", (req, res) => {
-  const { title, deskripsi, date, check } = req.body
-  const sql = "insert into todos (title, deskripsi, date) VALUES (?, ?, ?)"
-  db.query(sql, [title, deskripsi, date, check], (err, result) => {
-    if (err) throw err
-    res.status(201).json({ msg: "Berhasil post todos" })
-  })
-})
+// app.post("/api/v1/todos", (req, res) => {
+//   const { title, deskripsi, date, check } = req.body
+//   const sql = "insert into todos (title, deskripsi, date) VALUES (?, ?, ?)"
+//   db.query(sql, [title, deskripsi, date, check], (err, result) => {
+//     if (err) throw err
+//     res.status(201).json({ msg: "Berhasil post todos" })
+//   })
+// })
 
-const port = 3306 || 3001
+const port = process.env.DB_PORT || 3001
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
