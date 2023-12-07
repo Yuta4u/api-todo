@@ -7,11 +7,16 @@ const serverless = require("serverless-http")
 const app = express()
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
+  //   host: process.env.DB_HOST,
+  //   user: process.env.DB_USER,
+  //   password: process.env.DB_PASSWORD,
+  //   database: process.env.DB_DATABASE,
+  //   port: process.env.DB_PORT,
+  host: "b8udu00ubkpcim7ehlf2-mysql.services.clever-cloud.com",
+  user: "ukql7djzzzygrdqb",
+  password: "jC4Rj8oVEOjOJQhNXxkq",
+  database: "b8udu00ubkpcim7ehlf2",
+  port: "3306",
 })
 
 db.connect((err) => {
@@ -39,8 +44,8 @@ app.get("/api/v1/todos", (req, res) => {
 
 app.post("/api/v1/todos", (req, res) => {
   const { title, deskripsi, date, check } = req.body
-  const sql = "insert into todos (title, deskripsi, date) VALUES (?, ?, ?, 1)"
-  db.query(sql, [title, deskripsi, date, check], (err, result) => {
+  const sql = "insert into todos (title, deskripsi, date) VALUES (?, ?, ?)"
+  db.query(sql, [title, deskripsi, date], (err, result) => {
     if (err) throw err
     res.status(201).json({ msg: "Berhasil post todos" })
   })
