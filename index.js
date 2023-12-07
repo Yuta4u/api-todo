@@ -4,16 +4,17 @@ const mysql = require("mysql")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const serverless = require("serverless-http")
+const { v4 } = require("uuid")
 const app = express()
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: "b8udu00ubkpcim7ehlf2-mysql.services.clever-cloud.com",
   user: "ukql7djzzzygrdqb",
   password: "jC4Rj8oVEOjOJQhNXxkq",
   database: "b8udu00ubkpcim7ehlf2",
 })
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) throw err
   console.log("Connected to MySQL database")
 })
@@ -24,36 +25,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 app.options("*", cors())
 
-// app.post("/api/data", (req, res) => {
-//   const { dataField1, dataField2 } = req.body
+app.get("/home", (req, res) => {
+  res.status(200).json("Welcome, your app is working well")
+})
 
-//   if (!dataField1 || !dataField2) {
-//     res.status(400).json({ error: "Missing required fields" })
-//     return
-//   }
-
-//   const insertQuery = "INSERT INTO your_table (field1, field2) VALUES (?, ?)"
-//   const values = [dataField1, dataField2]
-
-//   connection.query(insertQuery, values, (error, results, fields) => {
-//     if (error) {
-//       res.status(500).json({ error })
-//       return
-//     }
-//     res.json({ success: true, insertedId: results.insertId })
-//   })
-// })
-app.get("/v1/todos", (req, res) => {
+app.get("/api/v1/todos", (req, res) => {
   const sql = "select * from todos"
-  connection.query(sql, (err, result) => {
+  db.query(sql, (err, result) => {
     if (err) throw err
     res.json({ todos: result })
   })
 })
 
-// Your Express routes and MySQL connection code here...
-
-const port = process.env.PORT || 3001
+const port = 3306 || 3001
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
