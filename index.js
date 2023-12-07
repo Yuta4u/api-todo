@@ -4,15 +4,14 @@ const mysql = require("mysql")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const serverless = require("serverless-http")
-const { v4 } = require("uuid")
 const app = express()
 
 const db = mysql.createConnection({
-  host: "b8udu00ubkpcim7ehlf2-mysql.services.clever-cloud.com",
-  user: "ukql7djzzzygrdqb",
-  password: "jC4Rj8oVEOjOJQhNXxkq",
-  database: "b8udu00ubkpcim7ehlf2",
-  port: 3306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
 })
 
 db.connect((err) => {
