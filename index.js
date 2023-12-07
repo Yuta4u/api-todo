@@ -46,6 +46,7 @@ app.post("/api/v1/todos", (req, res) => {
   })
 })
 
+const port = 3306 || 3001
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
