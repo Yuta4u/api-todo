@@ -1,14 +1,16 @@
 // api/index.js
 const express = require("express")
 const mysql = require("mysql")
+const bodyParser = require("body-parser")
+const cors = require("cors")
 const serverless = require("serverless-http")
 const app = express()
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: "b8udu00ubkpcim7ehlf2-mysql.services.clever-cloud.com",
+  user: "ukql7djzzzygrdqb",
+  password: "jC4Rj8oVEOjOJQhNXxkq",
+  database: "b8udu00ubkpcim7ehlf2",
 })
 
 connection.connect((err) => {
@@ -43,7 +45,7 @@ app.options("*", cors())
 // })
 app.get("/v1/todos", (req, res) => {
   const sql = "select * from todos"
-  db.query(sql, (err, result) => {
+  connection.query(sql, (err, result) => {
     if (err) throw err
     res.json({ todos: result })
   })
@@ -51,5 +53,9 @@ app.get("/v1/todos", (req, res) => {
 
 // Your Express routes and MySQL connection code here...
 
+const port = process.env.PORT || 3001
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
+})
 module.exports = app
 module.exports.handler = serverless(app)
